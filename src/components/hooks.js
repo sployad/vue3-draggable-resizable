@@ -99,10 +99,10 @@ function initState(props, emit) {
         setResizingMaxWidth: setResizingMaxWidth,
         setResizingMinWidth: setResizingMinWidth,
         setResizingMinHeight: setResizingMinHeight,
-        $setWidth: function (val) { return setWidth(Math.floor(val)); },
-        $setHeight: function (val) { return setHeight(Math.floor(val)); },
-        $setTop: function (val) { return setTop(Math.floor(val)); },
-        $setLeft: function (val) { return setLeft(Math.floor(val)); }
+        DSMsetWidth: function (val) { return setWidth(Math.floor(val)); },
+        DSMsetHeight: function (val) { return setHeight(Math.floor(val)); },
+        DSMsetTop: function (val) { return setTop(Math.floor(val)); },
+        DSMsetLeft: function (val) { return setLeft(Math.floor(val)); }
     };
 }
 exports.initState = initState;
@@ -124,7 +124,7 @@ function initParent(containerRef) {
 exports.initParent = initParent;
 function initLimitSizeAndMethods(props, parentSize, containerProps) {
     var width = containerProps.width, height = containerProps.height, left = containerProps.left, top = containerProps.top, resizingMaxWidth = containerProps.resizingMaxWidth, resizingMaxHeight = containerProps.resizingMaxHeight, resizingMinWidth = containerProps.resizingMinWidth, resizingMinHeight = containerProps.resizingMinHeight;
-    var $setWidth = containerProps.$setWidth, $setHeight = containerProps.$setHeight, $setTop = containerProps.$setTop, $setLeft = containerProps.$setLeft;
+    var DSMsetWidth = containerProps.DSMsetWidth, DSMsetHeight = containerProps.DSMsetHeight, DSMsetTop = containerProps.DSMsetTop, DSMsetLeft = containerProps.DSMsetLeft;
     var parentWidth = parentSize.parentWidth, parentHeight = parentSize.parentHeight;
     var limitProps = {
         minWidth: vue_1.computed(function () {
@@ -165,25 +165,25 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
             if (props.disabledW) {
                 return width.value;
             }
-            return $setWidth(Math.min(limitProps.maxWidth.value, Math.max(limitProps.minWidth.value, val)));
+            return DSMsetWidth(Math.min(limitProps.maxWidth.value, Math.max(limitProps.minWidth.value, val)));
         },
         setHeight: function (val) {
             if (props.disabledH) {
                 return height.value;
             }
-            return $setHeight(Math.min(limitProps.maxHeight.value, Math.max(limitProps.minHeight.value, val)));
+            return DSMsetHeight(Math.min(limitProps.maxHeight.value, Math.max(limitProps.minHeight.value, val)));
         },
         setTop: function (val) {
             if (props.disabledY) {
                 return top.value;
             }
-            return $setTop(Math.min(limitProps.maxTop.value, Math.max(limitProps.minTop.value, val)));
+            return DSMsetTop(Math.min(limitProps.maxTop.value, Math.max(limitProps.minTop.value, val)));
         },
         setLeft: function (val) {
             if (props.disabledX) {
                 return left.value;
             }
-            return $setLeft(Math.min(limitProps.maxLeft.value, Math.max(limitProps.minLeft.value, val)));
+            return DSMsetLeft(Math.min(limitProps.maxLeft.value, Math.max(limitProps.minLeft.value, val)));
         }
     };
     return __assign(__assign({}, limitProps), limitMethods);
@@ -210,7 +210,7 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
     var lstPageY = 0;
     var referenceLineMap = null;
     var documentElement = document.documentElement;
-    var _unselect = function (e) {
+    var DSMunselect = function (e) {
         var _a;
         var target = e.target;
         if (!((_a = containerRef.value) === null || _a === void 0 ? void 0 : _a.contains(target))) {
@@ -240,9 +240,6 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
     var handleDrag = function (e) {
         e.preventDefault();
         var trigger = triggerKey.value == 'right' ? 3 : 1;
-        console.log("键", triggerKey.value);
-        console.log("对应key", trigger);
-        console.log('按下的键', e);
         if (trigger != e.which) {
             return;
         }
@@ -341,18 +338,18 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
             return;
         el.style.left = x + 'px';
         el.style.top = y + 'px';
-        // document.documentElement.addEventListener('mousedown', _unselect)
+        // document.documentElement.addEventListener('mousedown', DSMunselect)
         // el.addEventListener('mousedown', handleDown)
-        utils_1.addEvent(documentElement, DOWN_HANDLES, _unselect);
+        utils_1.addEvent(documentElement, DOWN_HANDLES, DSMunselect);
         utils_1.addEvent(el, DOWN_HANDLES, handleDown);
     });
     vue_1.onUnmounted(function () {
         if (!containerRef.value)
             return;
-        // document.documentElement.removeEventListener('mousedown', _unselect)
+        // document.documentElement.removeEventListener('mousedown', DSMunselect)
         // document.documentElement.removeEventListener('mouseup', handleUp)
         // document.documentElement.removeEventListener('mousemove', handleDrag)
-        utils_1.removeEvent(documentElement, DOWN_HANDLES, _unselect);
+        utils_1.removeEvent(documentElement, DOWN_HANDLES, DSMunselect);
         utils_1.removeEvent(documentElement, UP_HANDLES, handleUp);
         utils_1.removeEvent(documentElement, MOVE_HANDLES, handleDrag);
     });
@@ -376,22 +373,22 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
     var documentElement = document.documentElement;
     var resizeHandleDrag = function (e) {
         e.preventDefault();
-        var _a = getPosition(e), _pageX = _a[0], _pageY = _a[1];
-        var deltaX = _pageX - lstPageX;
-        var deltaY = _pageY - lstPageY;
-        var _deltaX = deltaX;
-        var _deltaY = deltaY;
+        var _a = getPosition(e), DSMpageX = _a[0], DSMpageY = _a[1];
+        var deltaX = DSMpageX - lstPageX;
+        var deltaY = DSMpageY - lstPageY;
+        var DSMdeltaX = deltaX;
+        var DSMdeltaY = deltaY;
         if (props.lockAspectRatio) {
             deltaX = Math.abs(deltaX);
             deltaY = deltaX * tmpAspectRatio;
             if (idx0 === 't') {
-                if (_deltaX < 0 || (idx1 === 'm' && _deltaY < 0)) {
+                if (DSMdeltaX < 0 || (idx1 === 'm' && DSMdeltaY < 0)) {
                     deltaX = -deltaX;
                     deltaY = -deltaY;
                 }
             }
             else {
-                if (_deltaX < 0 || (idx1 === 'm' && _deltaY < 0)) {
+                if (DSMdeltaX < 0 || (idx1 === 'm' && DSMdeltaY < 0)) {
                     deltaX = -deltaX;
                     deltaY = -deltaY;
                 }
@@ -467,6 +464,12 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
         if (parent) {
             var maxHeight = idx0 === 't' ? top.value + height.value : parentHeight.value - top.value;
             var maxWidth = idx1 === 'l' ? left.value + width.value : parentWidth.value - left.value;
+            if (props.maxWidth && maxWidth >= props.maxWidth) {
+                maxWidth = props.maxWidth;
+            }
+            if (props.maxHeight && maxHeight >= props.maxHeight) {
+                maxHeight = props.maxHeight;
+            }
             if (props.lockAspectRatio) {
                 if (maxHeight / maxWidth < aspectRatio.value) {
                     maxWidth = maxHeight / aspectRatio.value;

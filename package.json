@@ -1,8 +1,8 @@
 {
-  "name": "vue3-draggable-resizable",
-  "version": "1.6.0",
+  "name": "draggable-resizable-vue-v3",
+  "version": "1.1.0",
   "private": false,
-  "description": "[Vue3 Component] 拖拽缩放并具有自动吸附对齐、参考线等功能",
+  "description": "Draggable resizable for vue3",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "npm run build:lib && npm run build:dts",
@@ -35,19 +35,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/a7650/vue3-draggable-resizable.git"
+    "url": "git+https://github.com/sployad/vue3-draggable-resizable.git"
   },
-  "bugs": {
-    "url": "https://github.com/a7650/vue3-draggable-resizable/issues"
-  },
-  "homepage": "https://github.com/a7650/vue3-draggable-resizable",
   "keywords": [
     "vue3",
     "component",
     "draggable",
-    "resizable",
-    "拖拽",
-    "吸附对齐"
+    "resizable"
   ],
   "main": "src/index.js",
   "module": "src/index.js",

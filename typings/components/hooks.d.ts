@@ -29,10 +29,10 @@ export declare function initState(props: any, emit: any): {
     setResizingMaxWidth: (value: number) => number;
     setResizingMinWidth: (value: number) => number;
     setResizingMinHeight: (value: number) => number;
-    $setWidth: (val: number) => number;
-    $setHeight: (val: number) => number;
-    $setTop: (val: number) => number;
-    $setLeft: (val: number) => number;
+    DSMsetWidth: (val: number) => number;
+    DSMsetHeight: (val: number) => number;
+    DSMsetTop: (val: number) => number;
+    DSMsetLeft: (val: number) => number;
 };
 export declare function initParent(containerRef: Ref<HTMLElement | undefined>): {
     parentWidth: Ref<number>;

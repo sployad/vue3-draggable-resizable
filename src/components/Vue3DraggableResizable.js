@@ -90,6 +90,14 @@ var VdrProps = {
         type: Number,
         "default": 20
     },
+    maxW: {
+        type: Number,
+        "default": 20
+    },
+    maxH: {
+        type: Number,
+        "default": 20
+    },
     active: {
         type: Boolean,
         "default": false

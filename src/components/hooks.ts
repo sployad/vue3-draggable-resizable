@@ -113,11 +113,11 @@ export function initState(props: any, emit: any) {
     setResizingMaxWidth,
     setResizingMinWidth,
     setResizingMinHeight,
-    $setWidth: (val: number) => setWidth(Math.floor(val)),
-    $setHeight: (val: number) => setHeight(Math.floor(val)),
-    $setTop: (val: number) => setTop(Math.floor(val)),
-    $setLeft: (val: number) => setLeft(Math.floor(val)),
-    
+    DSMsetWidth: (val: number) => setWidth(Math.floor(val)),
+    DSMsetHeight: (val: number) => setHeight(Math.floor(val)),
+    DSMsetTop: (val: number) => setTop(Math.floor(val)),
+    DSMsetLeft: (val: number) => setLeft(Math.floor(val)),
+
   }
 }
 
@@ -152,7 +152,7 @@ export function initLimitSizeAndMethods(
     resizingMinWidth,
     resizingMinHeight
   } = containerProps
-  const { $setWidth, $setHeight, $setTop, $setLeft } = containerProps
+  const { DSMsetWidth, DSMsetHeight, DSMsetTop, DSMsetLeft } = containerProps
   const { parentWidth, parentHeight } = parentSize
   const limitProps = {
     minWidth: computed(() => {
@@ -193,7 +193,7 @@ export function initLimitSizeAndMethods(
       if (props.disabledW) {
         return width.value
       }
-      return $setWidth(
+      return DSMsetWidth(
         Math.min(
           limitProps.maxWidth.value,
           Math.max(limitProps.minWidth.value, val)
@@ -204,7 +204,7 @@ export function initLimitSizeAndMethods(
       if (props.disabledH) {
         return height.value
       }
-      return $setHeight(
+      return DSMsetHeight(
         Math.min(
           limitProps.maxHeight.value,
           Math.max(limitProps.minHeight.value, val)
@@ -215,7 +215,7 @@ export function initLimitSizeAndMethods(
       if (props.disabledY) {
         return top.value
       }
-      return $setTop(
+      return DSMsetTop(
         Math.min(
           limitProps.maxTop.value,
           Math.max(limitProps.minTop.value, val)
@@ -226,7 +226,7 @@ export function initLimitSizeAndMethods(
       if (props.disabledX) {
         return left.value
       }
-      return $setLeft(
+      return DSMsetLeft(
         Math.min(
           limitProps.maxLeft.value,
           Math.max(limitProps.minLeft.value, val)
@@ -278,7 +278,7 @@ export function initDraggableContainer(
   let lstPageY = 0
   let referenceLineMap: ReferenceLineMap | null = null
   const documentElement = document.documentElement
-  const _unselect = (e: HandleEvent) => {
+  const DSMunselect = (e: HandleEvent) => {
     const target = e.target
     if (!containerRef.value?.contains(<Node>target)) {
       setEnable(false)
@@ -307,9 +307,6 @@ export function initDraggableContainer(
   const handleDrag = (e: MouseEvent) => {
     e.preventDefault()
     const trigger = triggerKey.value=='right'?3:1;
-    console.log("键",triggerKey.value)
-    console.log("对应key",trigger)
-    console.log('按下的键',e)
     if(trigger!= e.which){
       return;
     }
@@ -401,17 +398,17 @@ export function initDraggableContainer(
     if (!el) return
     el.style.left = x + 'px'
     el.style.top = y + 'px'
-    // document.documentElement.addEventListener('mousedown', _unselect)
+    // document.documentElement.addEventListener('mousedown', DSMunselect)
     // el.addEventListener('mousedown', handleDown)
-    addEvent(documentElement, DOWN_HANDLES, _unselect)
+    addEvent(documentElement, DOWN_HANDLES, DSMunselect)
     addEvent(el, DOWN_HANDLES, handleDown)
   })
   onUnmounted(() => {
     if (!containerRef.value) return
-    // document.documentElement.removeEventListener('mousedown', _unselect)
+    // document.documentElement.removeEventListener('mousedown', DSMunselect)
     // document.documentElement.removeEventListener('mouseup', handleUp)
     // document.documentElement.removeEventListener('mousemove', handleDrag)
-    removeEvent(documentElement, DOWN_HANDLES, _unselect)
+    removeEvent(documentElement, DOWN_HANDLES, DSMunselect)
     removeEvent(documentElement, UP_HANDLES, handleUp)
     removeEvent(documentElement, MOVE_HANDLES, handleDrag)
   })
@@ -448,21 +445,21 @@ export function initResizeHandle(
   const documentElement = document.documentElement
   const resizeHandleDrag = (e: HandleEvent) => {
     e.preventDefault()
-    let [_pageX, _pageY] = getPosition(e)
-    let deltaX = _pageX - lstPageX
-    let deltaY = _pageY - lstPageY
-    let _deltaX = deltaX
-    let _deltaY = deltaY
+    let [DSMpageX, DSMpageY] = getPosition(e)
+    let deltaX = DSMpageX - lstPageX
+    let deltaY = DSMpageY - lstPageY
+    let DSMdeltaX = deltaX
+    let DSMdeltaY = deltaY
     if (props.lockAspectRatio) {
       deltaX = Math.abs(deltaX)
       deltaY = deltaX * tmpAspectRatio
       if (idx0 === 't') {
-        if (_deltaX < 0 || (idx1 === 'm' && _deltaY < 0)) {
+        if (DSMdeltaX < 0 || (idx1 === 'm' && DSMdeltaY < 0)) {
           deltaX = -deltaX
           deltaY = -deltaY
         }
       } else {
-        if (_deltaX < 0 || (idx1 === 'm' && _deltaY < 0)) {
+        if (DSMdeltaX < 0 || (idx1 === 'm' && DSMdeltaY < 0)) {
           deltaX = -deltaX
           deltaY = -deltaY
         }
@@ -535,6 +532,14 @@ export function initResizeHandle(
         idx0 === 't' ? top.value + height.value : parentHeight.value - top.value
       let maxWidth =
         idx1 === 'l' ? left.value + width.value : parentWidth.value - left.value
+
+      if (props.maxWidth && maxWidth >= props.maxWidth){
+        maxWidth = props.maxWidth;
+      }
+      if (props.maxHeight && maxHeight >= props.maxHeight){
+        maxHeight = props.maxHeight;
+      }
+
       if (props.lockAspectRatio) {
         if (maxHeight / maxWidth < aspectRatio.value) {
           maxWidth = maxHeight / aspectRatio.value

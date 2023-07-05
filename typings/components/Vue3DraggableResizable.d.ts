@@ -59,6 +59,14 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
         type: NumberConstructor;
         default: number;
     };
+    maxW: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxH: {
+        type: NumberConstructor;
+        default: number;
+    };
     active: {
         type: BooleanConstructor;
         default: boolean;
@@ -154,10 +162,10 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     setResizingMaxWidth: (value: number) => number;
     setResizingMinWidth: (value: number) => number;
     setResizingMinHeight: (value: number) => number;
-    $setWidth: (val: number) => number;
-    $setHeight: (val: number) => number;
-    $setTop: (val: number) => number;
-    $setLeft: (val: number) => number;
+    DSMsetWidth: (val: number) => number;
+    DSMsetHeight: (val: number) => number;
+    DSMsetTop: (val: number) => number;
+    DSMsetLeft: (val: number) => number;
     containerRef: Ref<HTMLElement>;
     containerProvider: ContainerProvider;
 }, unknown, {
@@ -186,6 +194,8 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     disabledH: boolean;
     minW: number;
     minH: number;
+    maxW: number;
+    maxH: number;
     parent: boolean;
     handles: unknown[];
     classNameDraggable: string;
@@ -214,6 +224,8 @@ declare const VueDraggableResizable: import("vue").DefineComponent<{
     disabledH: boolean;
     minW: number;
     minH: number;
+    maxW: number;
+    maxH: number;
     parent: boolean;
     handles: unknown[];
     classNameDraggable: string;

@@ -23,6 +23,8 @@ declare const _default: ({
             disabledH: boolean;
             minW: number;
             minH: number;
+            maxW: number;
+            maxH: number;
             parent: boolean;
             handles: unknown[];
             classNameDraggable: string;
@@ -51,6 +53,8 @@ declare const _default: ({
             disabledH: boolean;
             minW: number;
             minH: number;
+            maxW: number;
+            maxH: number;
             parent: boolean;
             handles: unknown[];
             classNameDraggable: string;
@@ -89,6 +93,8 @@ declare const _default: ({
             disabledH: boolean;
             minW: number;
             minH: number;
+            maxW: number;
+            maxH: number;
             parent: boolean;
             handles: unknown[];
             classNameDraggable: string;
@@ -140,10 +146,10 @@ declare const _default: ({
             setResizingMaxWidth: (value: number) => number;
             setResizingMinWidth: (value: number) => number;
             setResizingMinHeight: (value: number) => number;
-            $setWidth: (val: number) => number;
-            $setHeight: (val: number) => number;
-            $setTop: (val: number) => number;
-            $setLeft: (val: number) => number;
+            DSMsetWidth: (val: number) => number;
+            DSMsetHeight: (val: number) => number;
+            DSMsetTop: (val: number) => number;
+            DSMsetLeft: (val: number) => number;
             containerRef: import("vue").Ref<HTMLElement>;
             containerProvider: import("./components/types").ContainerProvider;
         }, unknown, {
@@ -172,6 +178,8 @@ declare const _default: ({
             disabledH: boolean;
             minW: number;
             minH: number;
+            maxW: number;
+            maxH: number;
             parent: boolean;
             handles: unknown[];
             classNameDraggable: string;
@@ -204,6 +212,8 @@ declare const _default: ({
         disabledH: boolean;
         minW: number;
         minH: number;
+        maxW: number;
+        maxH: number;
         parent: boolean;
         handles: unknown[];
         classNameDraggable: string;
@@ -255,10 +265,10 @@ declare const _default: ({
         setResizingMaxWidth: (value: number) => number;
         setResizingMinWidth: (value: number) => number;
         setResizingMinHeight: (value: number) => number;
-        $setWidth: (val: number) => number;
-        $setHeight: (val: number) => number;
-        $setTop: (val: number) => number;
-        $setLeft: (val: number) => number;
+        DSMsetWidth: (val: number) => number;
+        DSMsetHeight: (val: number) => number;
+        DSMsetTop: (val: number) => number;
+        DSMsetLeft: (val: number) => number;
         containerRef: import("vue").Ref<HTMLElement>;
         containerProvider: import("./components/types").ContainerProvider;
     }> & {
@@ -291,6 +301,8 @@ declare const _default: ({
     disabledH: boolean;
     minW: number;
     minH: number;
+    maxW: number;
+    maxH: number;
     parent: boolean;
     handles: unknown[];
     classNameDraggable: string;
@@ -342,10 +354,10 @@ declare const _default: ({
     setResizingMaxWidth: (value: number) => number;
     setResizingMinWidth: (value: number) => number;
     setResizingMinHeight: (value: number) => number;
-    $setWidth: (val: number) => number;
-    $setHeight: (val: number) => number;
-    $setTop: (val: number) => number;
-    $setLeft: (val: number) => number;
+    DSMsetWidth: (val: number) => number;
+    DSMsetHeight: (val: number) => number;
+    DSMsetTop: (val: number) => number;
+    DSMsetLeft: (val: number) => number;
     containerRef: import("vue").Ref<HTMLElement>;
     containerProvider: import("./components/types").ContainerProvider;
 }, unknown, {
@@ -374,6 +386,8 @@ declare const _default: ({
     disabledH: boolean;
     minW: number;
     minH: number;
+    maxW: number;
+    maxH: number;
     parent: boolean;
     handles: unknown[];
     classNameDraggable: string;
@@ -408,6 +422,8 @@ declare const _default: ({
             disabledH: boolean;
             minW: number;
             minH: number;
+            maxW: number;
+            maxH: number;
             parent: boolean;
             handles: unknown[];
             classNameDraggable: string;
@@ -436,6 +452,8 @@ declare const _default: ({
             disabledH: boolean;
             minW: number;
             minH: number;
+            maxW: number;
+            maxH: number;
             parent: boolean;
             handles: unknown[];
             classNameDraggable: string;
@@ -474,6 +492,8 @@ declare const _default: ({
             disabledH: boolean;
             minW: number;
             minH: number;
+            maxW: number;
+            maxH: number;
             parent: boolean;
             handles: unknown[];
             classNameDraggable: string;
@@ -525,10 +545,10 @@ declare const _default: ({
             setResizingMaxWidth: (value: number) => number;
             setResizingMinWidth: (value: number) => number;
             setResizingMinHeight: (value: number) => number;
-            $setWidth: (val: number) => number;
-            $setHeight: (val: number) => number;
-            $setTop: (val: number) => number;
-            $setLeft: (val: number) => number;
+            DSMsetWidth: (val: number) => number;
+            DSMsetHeight: (val: number) => number;
+            DSMsetTop: (val: number) => number;
+            DSMsetLeft: (val: number) => number;
             containerRef: import("vue").Ref<HTMLElement>;
             containerProvider: import("./components/types").ContainerProvider;
         }, unknown, {
@@ -557,6 +577,8 @@ declare const _default: ({
             disabledH: boolean;
             minW: number;
             minH: number;
+            maxW: number;
+            maxH: number;
             parent: boolean;
             handles: unknown[];
             classNameDraggable: string;
@@ -589,6 +611,8 @@ declare const _default: ({
         disabledH: boolean;
         minW: number;
         minH: number;
+        maxW: number;
+        maxH: number;
         parent: boolean;
         handles: unknown[];
         classNameDraggable: string;
@@ -640,10 +664,10 @@ declare const _default: ({
         setResizingMaxWidth: (value: number) => number;
         setResizingMinWidth: (value: number) => number;
         setResizingMinHeight: (value: number) => number;
-        $setWidth: (val: number) => number;
-        $setHeight: (val: number) => number;
-        $setTop: (val: number) => number;
-        $setLeft: (val: number) => number;
+        DSMsetWidth: (val: number) => number;
+        DSMsetHeight: (val: number) => number;
+        DSMsetTop: (val: number) => number;
+        DSMsetLeft: (val: number) => number;
         containerRef: import("vue").Ref<HTMLElement>;
         containerProvider: import("./components/types").ContainerProvider;
     }> & {
@@ -676,6 +700,8 @@ declare const _default: ({
     disabledH: boolean;
     minW: number;
     minH: number;
+    maxW: number;
+    maxH: number;
     parent: boolean;
     handles: unknown[];
     classNameDraggable: string;
@@ -727,10 +753,10 @@ declare const _default: ({
     setResizingMaxWidth: (value: number) => number;
     setResizingMinWidth: (value: number) => number;
     setResizingMinHeight: (value: number) => number;
-    $setWidth: (val: number) => number;
-    $setHeight: (val: number) => number;
-    $setTop: (val: number) => number;
-    $setLeft: (val: number) => number;
+    DSMsetWidth: (val: number) => number;
+    DSMsetHeight: (val: number) => number;
+    DSMsetTop: (val: number) => number;
+    DSMsetLeft: (val: number) => number;
     containerRef: import("vue").Ref<HTMLElement>;
     containerProvider: import("./components/types").ContainerProvider;
 }, unknown, {
@@ -759,6 +785,8 @@ declare const _default: ({
     disabledH: boolean;
     minW: number;
     minH: number;
+    maxW: number;
+    maxH: number;
     parent: boolean;
     handles: unknown[];
     classNameDraggable: string;
