@@ -1886,7 +1886,6 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
       if (props.disabledW) {
         return width.value;
       }
-      console.log("SET WIDTH", val, limitProps.maxWidth.value, limitProps.minWidth.value);
       return DSMsetWidth(Math.min(limitProps.maxWidth.value, Math.max(limitProps.minWidth.value, val)));
     },
     setHeight(val) {
@@ -2467,7 +2466,6 @@ const VueDraggableResizable = (0,external_commonjs_vue_commonjs2_vue_root_Vue_na
       width,
       height
     } = getElSize(this.containerRef);
-    console.log(this.initW, this.w, width);
     this.setWidth(this.initW === null ? this.w || width : this.initW);
     this.setHeight(this.initH === null ? this.h || height : this.initH);
     if (this.containerProvider) {

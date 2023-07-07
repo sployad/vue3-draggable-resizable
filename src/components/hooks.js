@@ -167,7 +167,6 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
             if (props.disabledW) {
                 return width.value;
             }
-            console.log("SET WIDTH", val, limitProps.maxWidth.value, limitProps.minWidth.value);
             return DSMsetWidth(Math.min(limitProps.maxWidth.value, Math.max(limitProps.minWidth.value, val)));
         },
         setHeight: function (val) {
