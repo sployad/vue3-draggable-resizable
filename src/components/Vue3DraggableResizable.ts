@@ -87,11 +87,11 @@ const VdrProps = {
   },
   maxW: {
     type: Number,
-    default: 20
+    default: Infinity
   },
   maxH: {
     type: Number,
-    default: 20
+    default: Infinity
   },
   active: {
     type: Boolean,
@@ -186,7 +186,7 @@ const VueDraggableResizable = defineComponent({
       }
     }
     const containerRef = ref<HTMLElement>()
-    const parentSize = initParent(containerRef)
+    const parentSize = initParent(containerRef, props)
     const limitProps = initLimitSizeAndMethods(
       props,
       parentSize,
@@ -241,6 +241,7 @@ const VueDraggableResizable = defineComponent({
     if (!this.containerRef) return
     this.containerRef.ondragstart = () => false
     const { width, height } = getElSize(this.containerRef)
+    console.log(this.initW, this.w, width);
     this.setWidth(this.initW === null ? this.w || width : this.initW)
     this.setHeight(this.initH === null ? this.h || height : this.initH)
     if (this.containerProvider) {

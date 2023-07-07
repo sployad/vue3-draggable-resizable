@@ -9,8 +9,8 @@ export interface Position {
 export interface PositionStore {
     [propName: string]: Position;
 }
-export declare type UpdatePosition = (id: string, position: Position) => void;
-export declare type GetPositionStore = (excludeId?: string) => PositionStore;
+export type UpdatePosition = (id: string, position: Position) => void;
+export type GetPositionStore = (excludeId?: string) => PositionStore;
 export interface ContainerProvider {
     updatePosition: UpdatePosition;
     getPositionStore: GetPositionStore;
@@ -24,9 +24,9 @@ export interface MatchedLine {
     row: number[];
     col: number[];
 }
-export declare type SetMatchedLine = (matchedLine: MatchedLine | null) => void;
-export declare type ResizingHandle = 'tl' | 'tm' | 'tr' | 'ml' | 'mr' | 'bl' | 'bm' | 'br' | '';
-export declare type ParentSize = ReturnType<typeof initParent>;
-export declare type ReferenceLineMap = Record<'col' | 'row', {
+export type SetMatchedLine = (matchedLine: MatchedLine | null) => void;
+export type ResizingHandle = 'tl' | 'tm' | 'tr' | 'ml' | 'mr' | 'bl' | 'bm' | 'br' | '';
+export type ParentSize = ReturnType<typeof initParent>;
+export type ReferenceLineMap = Record<'col' | 'row', {
     [propName: number]: Record<'min' | 'max' | 'value', number>;
 }>;

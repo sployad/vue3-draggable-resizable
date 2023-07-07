@@ -15,7 +15,7 @@ exports.watchProps = exports.initResizeHandle = exports.initDraggableContainer =
 var vue_1 = require("vue");
 var utils_1 = require("./utils");
 function useState(initialState) {
-    var state = vue_1.ref(initialState);
+    var state = (0, vue_1.ref)(initialState);
     var setState = function (value) {
         state.value = value;
         return value;
@@ -24,35 +24,35 @@ function useState(initialState) {
 }
 exports.useState = useState;
 function initState(props, emit) {
-    var _a = useState(props.initW), width = _a[0], setWidth = _a[1];
-    var _b = useState(props.initH), height = _b[0], setHeight = _b[1];
+    var _a = useState(props.w !== 0 ? props.w : props.initW), width = _a[0], setWidth = _a[1];
+    var _b = useState(props.h !== 0 ? props.h : props.initH), height = _b[0], setHeight = _b[1];
     var _c = useState(props.x), left = _c[0], setLeft = _c[1];
     var _d = useState(props.y), top = _d[0], setTop = _d[1];
     var _e = useState(props.active), enable = _e[0], setEnable = _e[1];
     var _f = useState(false), dragging = _f[0], setDragging = _f[1];
     var _g = useState(false), resizing = _g[0], setResizing = _g[1];
     var _h = useState(''), resizingHandle = _h[0], setResizingHandle = _h[1];
-    var _j = useState(Infinity), resizingMaxWidth = _j[0], setResizingMaxWidth = _j[1];
-    var _k = useState(Infinity), resizingMaxHeight = _k[0], setResizingMaxHeight = _k[1];
+    var _j = useState(props.maxW), resizingMaxWidth = _j[0], setResizingMaxWidth = _j[1];
+    var _k = useState(props.maxH), resizingMaxHeight = _k[0], setResizingMaxHeight = _k[1];
     var _l = useState(props.minW), resizingMinWidth = _l[0], setResizingMinWidth = _l[1];
     var _m = useState(props.minH), resizingMinHeight = _m[0], setResizingMinHeight = _m[1];
     var _o = useState(props.parentScaleX), parentScaleX = _o[0], setParentScaleX = _o[1];
     var _p = useState(props.parentScaleY), parentScaleY = _p[0], setParentScaleY = _p[1];
     var _q = useState(props.triggerKey), triggerKey = _q[0], setTriggerKey = _q[1];
-    var aspectRatio = vue_1.computed(function () { return height.value / width.value; });
-    vue_1.watch(width, function (newVal) {
+    var aspectRatio = (0, vue_1.computed)(function () { return height.value / width.value; });
+    (0, vue_1.watch)(width, function (newVal) {
         emit('update:w', newVal);
     }, { immediate: true });
-    vue_1.watch(height, function (newVal) {
+    (0, vue_1.watch)(height, function (newVal) {
         emit('update:h', newVal);
     }, { immediate: true });
-    vue_1.watch(top, function (newVal) {
+    (0, vue_1.watch)(top, function (newVal) {
         emit('update:y', newVal);
     });
-    vue_1.watch(left, function (newVal) {
+    (0, vue_1.watch)(left, function (newVal) {
         emit('update:x', newVal);
     });
-    vue_1.watch(enable, function (newVal, oldVal) {
+    (0, vue_1.watch)(enable, function (newVal, oldVal) {
         emit('update:active', newVal);
         if (!oldVal && newVal) {
             emit('activated');
@@ -61,20 +61,20 @@ function initState(props, emit) {
             emit('deactivated');
         }
     });
-    vue_1.watch(function () { return props.active; }, function (newVal) {
+    (0, vue_1.watch)(function () { return props.active; }, function (newVal) {
         setEnable(newVal);
     });
-    vue_1.watch(function () { return props.parentScaleX; }, function () {
+    (0, vue_1.watch)(function () { return props.parentScaleX; }, function () {
         setParentScaleX(props.parentScaleX);
     });
-    vue_1.watch(function () { return props.parentScaleY; }, function () {
+    (0, vue_1.watch)(function () { return props.parentScaleY; }, function () {
         setParentScaleY(props.parentScaleY);
     });
-    vue_1.watch(function () { return props.triggerKey; }, function () {
+    (0, vue_1.watch)(function () { return props.triggerKey; }, function () {
         setTriggerKey(props.triggerKey);
     });
     return {
-        id: utils_1.getId(),
+        id: (0, utils_1.getId)(),
         width: width,
         height: height,
         top: top,
@@ -106,15 +106,17 @@ function initState(props, emit) {
     };
 }
 exports.initState = initState;
-function initParent(containerRef) {
-    var parentWidth = vue_1.ref(0);
-    var parentHeight = vue_1.ref(0);
-    vue_1.onMounted(function () {
-        if (containerRef.value && containerRef.value.parentElement) {
-            var _a = utils_1.getElSize(containerRef.value.parentElement), width = _a.width, height = _a.height;
-            parentWidth.value = width;
-            parentHeight.value = height;
-        }
+function initParent(containerRef, props) {
+    var parentWidth = (0, vue_1.ref)(0);
+    var parentHeight = (0, vue_1.ref)(0);
+    (0, vue_1.onMounted)(function () {
+        (0, vue_1.watch)(function () { return props.parent; }, function (newVal) {
+            if (newVal && containerRef.value && containerRef.value.parentElement) {
+                var _a = (0, utils_1.getElSize)(containerRef.value.parentElement), width = _a.width, height = _a.height;
+                parentWidth.value = width;
+                parentHeight.value = height;
+            }
+        }, { immediate: true });
     });
     return {
         parentWidth: parentWidth,
@@ -127,36 +129,36 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
     var DSMsetWidth = containerProps.DSMsetWidth, DSMsetHeight = containerProps.DSMsetHeight, DSMsetTop = containerProps.DSMsetTop, DSMsetLeft = containerProps.DSMsetLeft;
     var parentWidth = parentSize.parentWidth, parentHeight = parentSize.parentHeight;
     var limitProps = {
-        minWidth: vue_1.computed(function () {
+        minWidth: (0, vue_1.computed)(function () {
             return resizingMinWidth.value;
         }),
-        minHeight: vue_1.computed(function () {
+        minHeight: (0, vue_1.computed)(function () {
             return resizingMinHeight.value;
         }),
-        maxWidth: vue_1.computed(function () {
-            var max = Infinity;
+        maxWidth: (0, vue_1.computed)(function () {
+            var max = resizingMaxWidth.value;
             if (props.parent) {
                 max = Math.min(parentWidth.value, resizingMaxWidth.value);
             }
             return max;
         }),
-        maxHeight: vue_1.computed(function () {
-            var max = Infinity;
+        maxHeight: (0, vue_1.computed)(function () {
+            var max = resizingMaxHeight.value;
             if (props.parent) {
                 max = Math.min(parentHeight.value, resizingMaxHeight.value);
             }
             return max;
         }),
-        minLeft: vue_1.computed(function () {
+        minLeft: (0, vue_1.computed)(function () {
             return props.parent ? 0 : -Infinity;
         }),
-        minTop: vue_1.computed(function () {
+        minTop: (0, vue_1.computed)(function () {
             return props.parent ? 0 : -Infinity;
         }),
-        maxLeft: vue_1.computed(function () {
+        maxLeft: (0, vue_1.computed)(function () {
             return props.parent ? parentWidth.value - width.value : Infinity;
         }),
-        maxTop: vue_1.computed(function () {
+        maxTop: (0, vue_1.computed)(function () {
             return props.parent ? parentHeight.value - height.value : Infinity;
         })
     };
@@ -165,6 +167,7 @@ function initLimitSizeAndMethods(props, parentSize, containerProps) {
             if (props.disabledW) {
                 return width.value;
             }
+            console.log("SET WIDTH", val, limitProps.maxWidth.value, limitProps.minWidth.value);
             return DSMsetWidth(Math.min(limitProps.maxWidth.value, Math.max(limitProps.minWidth.value, val)));
         },
         setHeight: function (val) {
@@ -224,8 +227,8 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
         setDragging(false);
         // document.documentElement.removeEventListener('mouseup', handleUp)
         // document.documentElement.removeEventListener('mousemove', handleDrag)
-        utils_1.removeEvent(documentElement, UP_HANDLES, handleUp);
-        utils_1.removeEvent(documentElement, MOVE_HANDLES, handleDrag);
+        (0, utils_1.removeEvent)(documentElement, UP_HANDLES, handleUp);
+        (0, utils_1.removeEvent)(documentElement, MOVE_HANDLES, handleDrag);
         referenceLineMap = null;
         if (containerProvider) {
             containerProvider.updatePosition(id, {
@@ -315,13 +318,13 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
         lstPageY = getPosition(e)[1];
         // document.documentElement.addEventListener('mousemove', handleDrag)
         // document.documentElement.addEventListener('mouseup', handleUp)
-        utils_1.addEvent(documentElement, MOVE_HANDLES, handleDrag);
-        utils_1.addEvent(documentElement, UP_HANDLES, handleUp);
+        (0, utils_1.addEvent)(documentElement, MOVE_HANDLES, handleDrag);
+        (0, utils_1.addEvent)(documentElement, UP_HANDLES, handleUp);
         if (containerProvider && !containerProvider.disabled.value) {
-            referenceLineMap = utils_1.getReferenceLineMap(containerProvider, parentSize, id);
+            referenceLineMap = (0, utils_1.getReferenceLineMap)(containerProvider, parentSize, id);
         }
     };
-    vue_1.watch(dragging, function (cur, pre) {
+    (0, vue_1.watch)(dragging, function (cur, pre) {
         if (!pre && cur) {
             emit('drag-start', { x: x.value, y: y.value });
             setEnable(true);
@@ -332,7 +335,7 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
             setDragging(false);
         }
     });
-    vue_1.onMounted(function () {
+    (0, vue_1.onMounted)(function () {
         var el = containerRef.value;
         if (!el)
             return;
@@ -340,18 +343,18 @@ function initDraggableContainer(containerRef, containerProps, limitProps, dragga
         el.style.top = y + 'px';
         // document.documentElement.addEventListener('mousedown', DSMunselect)
         // el.addEventListener('mousedown', handleDown)
-        utils_1.addEvent(documentElement, DOWN_HANDLES, DSMunselect);
-        utils_1.addEvent(el, DOWN_HANDLES, handleDown);
+        (0, utils_1.addEvent)(documentElement, DOWN_HANDLES, DSMunselect);
+        (0, utils_1.addEvent)(el, DOWN_HANDLES, handleDown);
     });
-    vue_1.onUnmounted(function () {
+    (0, vue_1.onUnmounted)(function () {
         if (!containerRef.value)
             return;
         // document.documentElement.removeEventListener('mousedown', DSMunselect)
         // document.documentElement.removeEventListener('mouseup', handleUp)
         // document.documentElement.removeEventListener('mousemove', handleDrag)
-        utils_1.removeEvent(documentElement, DOWN_HANDLES, DSMunselect);
-        utils_1.removeEvent(documentElement, UP_HANDLES, handleUp);
-        utils_1.removeEvent(documentElement, MOVE_HANDLES, handleDrag);
+        (0, utils_1.removeEvent)(documentElement, DOWN_HANDLES, DSMunselect);
+        (0, utils_1.removeEvent)(documentElement, UP_HANDLES, handleUp);
+        (0, utils_1.removeEvent)(documentElement, MOVE_HANDLES, handleDrag);
     });
     return { containerRef: containerRef };
 }
@@ -424,14 +427,14 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
         });
         setResizingHandle('');
         setResizing(false);
-        setResizingMaxWidth(Infinity);
-        setResizingMaxHeight(Infinity);
+        setResizingMaxWidth(props.maxW);
+        setResizingMaxHeight(props.maxH);
         setResizingMinWidth(props.minW);
         setResizingMinHeight(props.minH);
         // document.documentElement.removeEventListener('mousemove', resizeHandleDrag)
         // document.documentElement.removeEventListener('mouseup', resizeHandleUp)
-        utils_1.removeEvent(documentElement, MOVE_HANDLES, resizeHandleDrag);
-        utils_1.removeEvent(documentElement, UP_HANDLES, resizeHandleUp);
+        (0, utils_1.removeEvent)(documentElement, MOVE_HANDLES, resizeHandleDrag);
+        (0, utils_1.removeEvent)(documentElement, UP_HANDLES, resizeHandleUp);
     };
     var resizeHandleDown = function (e, handleType) {
         if (!props.resizable)
@@ -464,12 +467,6 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
         if (parent) {
             var maxHeight = idx0 === 't' ? top.value + height.value : parentHeight.value - top.value;
             var maxWidth = idx1 === 'l' ? left.value + width.value : parentWidth.value - left.value;
-            if (props.maxWidth && maxWidth >= props.maxWidth) {
-                maxWidth = props.maxWidth;
-            }
-            if (props.maxHeight && maxHeight >= props.maxHeight) {
-                maxHeight = props.maxHeight;
-            }
             if (props.lockAspectRatio) {
                 if (maxHeight / maxWidth < aspectRatio.value) {
                     maxWidth = maxHeight / aspectRatio.value;
@@ -478,8 +475,8 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
                     maxHeight = maxWidth * aspectRatio.value;
                 }
             }
-            setResizingMaxHeight(maxHeight);
-            setResizingMaxWidth(maxWidth);
+            setResizingMaxHeight(Math.min(maxHeight, props.maxH));
+            setResizingMaxWidth(Math.min(maxWidth, props.maxW));
         }
         lstW = width.value;
         lstH = height.value;
@@ -497,17 +494,17 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
         });
         // document.documentElement.addEventListener('mousemove', resizeHandleDrag)
         // document.documentElement.addEventListener('mouseup', resizeHandleUp)
-        utils_1.addEvent(documentElement, MOVE_HANDLES, resizeHandleDrag);
-        utils_1.addEvent(documentElement, UP_HANDLES, resizeHandleUp);
+        (0, utils_1.addEvent)(documentElement, MOVE_HANDLES, resizeHandleDrag);
+        (0, utils_1.addEvent)(documentElement, UP_HANDLES, resizeHandleUp);
     };
-    vue_1.onUnmounted(function () {
+    (0, vue_1.onUnmounted)(function () {
         // document.documentElement.removeEventListener('mouseup', resizeHandleDrag)
         // document.documentElement.removeEventListener('mousemove', resizeHandleUp)
-        utils_1.removeEvent(documentElement, UP_HANDLES, resizeHandleUp);
-        utils_1.removeEvent(documentElement, MOVE_HANDLES, resizeHandleDrag);
+        (0, utils_1.removeEvent)(documentElement, UP_HANDLES, resizeHandleUp);
+        (0, utils_1.removeEvent)(documentElement, MOVE_HANDLES, resizeHandleDrag);
     });
-    var handlesFiltered = vue_1.computed(function () {
-        return props.resizable ? utils_1.filterHandles(props.handles) : [];
+    var handlesFiltered = (0, vue_1.computed)(function () {
+        return props.resizable ? (0, utils_1.filterHandles)(props.handles) : [];
     });
     return {
         handlesFiltered: handlesFiltered,
@@ -517,16 +514,16 @@ function initResizeHandle(containerProps, limitProps, parentSize, props, emit) {
 exports.initResizeHandle = initResizeHandle;
 function watchProps(props, limits) {
     var setWidth = limits.setWidth, setHeight = limits.setHeight, setLeft = limits.setLeft, setTop = limits.setTop;
-    vue_1.watch(function () { return props.w; }, function (newVal) {
+    (0, vue_1.watch)(function () { return props.w; }, function (newVal) {
         setWidth(newVal);
     });
-    vue_1.watch(function () { return props.h; }, function (newVal) {
+    (0, vue_1.watch)(function () { return props.h; }, function (newVal) {
         setHeight(newVal);
     });
-    vue_1.watch(function () { return props.x; }, function (newVal) {
+    (0, vue_1.watch)(function () { return props.x; }, function (newVal) {
         setLeft(newVal);
     });
-    vue_1.watch(function () { return props.y; }, function (newVal) {
+    (0, vue_1.watch)(function () { return props.y; }, function (newVal) {
         setTop(newVal);
     });
 }

@@ -1,6 +1,6 @@
 import { Ref } from 'vue';
 import { ContainerProvider, ResizingHandle } from './types';
-declare type HandleEvent = MouseEvent | TouchEvent;
+type HandleEvent = MouseEvent | TouchEvent;
 export declare function useState<T>(initialState: T): [Ref<T>, (value: T) => T];
 declare type TriggerKey = 'left' | 'right';
 export declare function initState(props: any, emit: any): {
@@ -34,7 +34,7 @@ export declare function initState(props: any, emit: any): {
     DSMsetTop: (val: number) => number;
     DSMsetLeft: (val: number) => number;
 };
-export declare function initParent(containerRef: Ref<HTMLElement | undefined>): {
+export declare function initParent(containerRef: Ref<HTMLElement | undefined>, props: any): {
     parentWidth: Ref<number>;
     parentHeight: Ref<number>;
 };

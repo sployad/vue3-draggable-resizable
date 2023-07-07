@@ -10,12 +10,14 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
 exports.ALL_HANDLES = void 0;
@@ -92,11 +94,11 @@ var VdrProps = {
     },
     maxW: {
         type: Number,
-        "default": 20
+        "default": Infinity
     },
     maxH: {
         type: Number,
-        "default": 20
+        "default": Infinity
     },
     active: {
         type: Boolean,
@@ -110,7 +112,7 @@ var VdrProps = {
         type: Array,
         "default": exports.ALL_HANDLES,
         validator: function (handles) {
-            return utils_1.filterHandles(handles).length === handles.length;
+            return (0, utils_1.filterHandles)(handles).length === handles.length;
         }
     },
     classNameDraggable: {
@@ -169,34 +171,33 @@ var emits = [
     'update:y',
     'update:active'
 ];
-var VueDraggableResizable = vue_1.defineComponent({
+var VueDraggableResizable = (0, vue_1.defineComponent)({
     name: 'Vue3DraggableResizable',
     props: VdrProps,
     emits: emits,
     setup: function (props, _a) {
         var emit = _a.emit;
-        var containerProps = hooks_1.initState(props, emit);
-        var provideIdentity = vue_1.inject('identity');
+        var containerProps = (0, hooks_1.initState)(props, emit);
+        var provideIdentity = (0, vue_1.inject)('identity');
         var containerProvider = null;
         if (provideIdentity === utils_1.IDENTITY) {
             containerProvider = {
-                updatePosition: vue_1.inject('updatePosition'),
-                getPositionStore: vue_1.inject('getPositionStore'),
-                disabled: vue_1.inject('disabled'),
-                adsorbParent: vue_1.inject('adsorbParent'),
-                adsorbCols: vue_1.inject('adsorbCols'),
-                adsorbRows: vue_1.inject('adsorbRows'),
-                setMatchedLine: vue_1.inject('setMatchedLine')
+                updatePosition: (0, vue_1.inject)('updatePosition'),
+                getPositionStore: (0, vue_1.inject)('getPositionStore'),
+                disabled: (0, vue_1.inject)('disabled'),
+                adsorbParent: (0, vue_1.inject)('adsorbParent'),
+                adsorbCols: (0, vue_1.inject)('adsorbCols'),
+                adsorbRows: (0, vue_1.inject)('adsorbRows'),
+                setMatchedLine: (0, vue_1.inject)('setMatchedLine')
             };
         }
-        var containerRef = vue_1.ref();
-        var parentSize = hooks_1.initParent(containerRef);
-        var limitProps = hooks_1.initLimitSizeAndMethods(props, parentSize, containerProps);
-        hooks_1.initDraggableContainer(containerRef, containerProps, limitProps, vue_1.toRef(props, 'draggable'), emit, containerProvider, parentSize);
-        var resizeHandle = hooks_1.initResizeHandle(containerProps, limitProps, parentSize, props, emit);
-        hooks_1.watchProps(props, limitProps);
-        return __assign(__assign(__assign(__assign({ containerRef: containerRef,
-            containerProvider: containerProvider }, containerProps), parentSize), limitProps), resizeHandle);
+        var containerRef = (0, vue_1.ref)();
+        var parentSize = (0, hooks_1.initParent)(containerRef, props);
+        var limitProps = (0, hooks_1.initLimitSizeAndMethods)(props, parentSize, containerProps);
+        (0, hooks_1.initDraggableContainer)(containerRef, containerProps, limitProps, (0, vue_1.toRef)(props, 'draggable'), emit, containerProvider, parentSize);
+        var resizeHandle = (0, hooks_1.initResizeHandle)(containerProps, limitProps, parentSize, props, emit);
+        (0, hooks_1.watchProps)(props, limitProps);
+        return __assign(__assign(__assign(__assign({ containerRef: containerRef, containerProvider: containerProvider }, containerProps), parentSize), limitProps), resizeHandle);
     },
     computed: {
         style: function () {
@@ -222,7 +223,8 @@ var VueDraggableResizable = vue_1.defineComponent({
         if (!this.containerRef)
             return;
         this.containerRef.ondragstart = function () { return false; };
-        var _a = utils_1.getElSize(this.containerRef), width = _a.width, height = _a.height;
+        var _a = (0, utils_1.getElSize)(this.containerRef), width = _a.width, height = _a.height;
+        console.log(this.initW, this.w, width);
         this.setWidth(this.initW === null ? this.w || width : this.initW);
         this.setHeight(this.initH === null ? this.h || height : this.initH);
         if (this.containerProvider) {
@@ -236,19 +238,19 @@ var VueDraggableResizable = vue_1.defineComponent({
     },
     render: function () {
         var _this = this;
-        return vue_1.h('div', {
+        return (0, vue_1.h)('div', {
             ref: 'containerRef',
             "class": ['vdr-container', this.klass],
             style: this.style
-        }, __spreadArrays([
+        }, __spreadArray([
             this.$slots["default"] && this.$slots["default"]()
         ], this.handlesFiltered.map(function (item) {
-            return vue_1.h('div', {
+            return (0, vue_1.h)('div', {
                 "class": [
                     'vdr-handle',
                     'vdr-handle-' + item,
                     _this.classNameHandle,
-                    _this.classNameHandle + "-" + item
+                    "".concat(_this.classNameHandle, "-").concat(item)
                 ],
                 style: { display: _this.enable ? 'block' : 'none' },
                 onMousedown: function (e) {
@@ -258,7 +260,7 @@ var VueDraggableResizable = vue_1.defineComponent({
                     return _this.resizeHandleDown(e, item);
                 }
             });
-        })));
+        }), true));
     }
 });
 exports["default"] = VueDraggableResizable;
